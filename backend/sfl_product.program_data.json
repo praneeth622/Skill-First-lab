@@ -1,0 +1,172 @@
+[
+  {
+    "_id": "66a087495b0d7eb1a3d18cdf",
+    "status": 0,
+    "created_by": "661114f4ad6de22d9ab907d3",
+    "created_at": "2024-07-25T02:18:10.054Z",
+    "program_name": "React ",
+    "program_short_description": "Front End Developer Roadmap",
+    "program_description": "<p><strong style=\"background-color: rgb(31, 31, 31); color: rgb(188, 192, 195);\">React</strong><span style=\"background-color: rgb(31, 31, 31); color: rgb(189, 193, 198);\">&nbsp;is the library for web and native user interfaces. Build user interfaces out of individual pieces called components written in JavaScript.</span></p>",
+    "organization_ids": [],
+    "super_admin": "661114f4ad6de22d9ab907d3",
+    "program_start_date": "2024-07-23T14:33:18.000Z",
+    "program_end_date": "2024-07-27T18:29:59.000Z",
+    "modules_list": [
+      {
+        "module_name": "How to create and nest components",
+        "module_description": "<p>React apps are made out of <em>components</em>. A component is a piece of the UI (user interface) that has its own logic and appearance. A component can be as small as a button, or as large as an entire page.</p><p>React components are JavaScript functions that return markup</p>",
+        "module_start_date": "2024-07-23T14:33:18.000Z",
+        "module_end_date": "2024-07-27T18:29:59.000Z",
+        "order": 0,
+        "activity_list": [
+          {
+            "type": "assessment",
+            "activity_start_date": "2024-07-25T14:34:18.000Z",
+            "activity_end_date": "2024-07-24T18:29:59.000Z",
+            "status": 0,
+            "data": {
+              "no_of_attempt": "2",
+              "test_id": "12345",
+              "test_name": "create and nest components"
+            },
+            "order": 0,
+            "_id": "66a0ace15b0d7eb1a3d18cfe"
+          }
+        ],
+        "_id": "66a087805b0d7eb1a3d18ce3"
+      },
+      {
+        "module_name": "Writing markup with JSX ",
+        "module_description": "<p><span style=\"background-color: rgb(35, 39, 47); color: rgb(246, 247, 249);\">JSX is stricter than HTML. You have to close tags like &lt;br /&gt;. Your component also can’t return multiple JSX tags. You have to wrap them into a shared parent, like a &lt;div&gt;...&lt;/div&gt; or an empty &lt;&gt;...&lt;/&gt; wrapper:</span></p>",
+        "module_start_date": "2024-07-23T18:30:00.000Z",
+        "module_end_date": "2024-07-27T18:29:59.000Z",
+        "order": 0,
+        "activity_list": [
+          {
+            "type": "assessment",
+            "activity_start_date": "2024-07-23T18:30:00.000Z",
+            "activity_end_date": "2024-07-25T18:29:59.000Z",
+            "status": 0,
+            "data": {
+              "no_of_attempt": "1",
+              "test_id": "987654",
+              "test_name": "Writing markup with JSX Test"
+            },
+            "order": 0,
+            "_id": "66a0ad045b0d7eb1a3d18d0d"
+          }
+        ],
+        "_id": "66a087a55b0d7eb1a3d18ce9"
+      },
+      {
+        "module_name": "Displaying data ",
+        "module_description": "<p><span style=\"background-color: rgb(35, 39, 47); color: rgb(246, 247, 249);\">JSX lets you put markup into JavaScript. Curly braces let you “escape back” into JavaScript so that you can embed some variable from your code and display it to the user. </span></p>",
+        "module_start_date": "2024-07-23T18:30:00.000Z",
+        "module_end_date": "2024-07-27T18:29:59.000Z",
+        "order": 0,
+        "activity_list": [
+          {
+            "type": "assessment",
+            "activity_start_date": "2024-07-26T18:30:00.000Z",
+            "activity_end_date": "2024-07-27T18:29:59.000Z",
+            "status": 0,
+            "data": {
+              "no_of_attempt": "3",
+              "test_id": "65432",
+              "test_name": "Displaying data test"
+            },
+            "order": 0,
+            "_id": "66a0b4035b0d7eb1a3d18d31"
+          }
+        ],
+        "_id": "66a0acb95b0d7eb1a3d18cf2"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "66a0b52e5b0d7eb1a3d18d6c",
+    "status": 0,
+    "created_by": "661114f4ad6de22d9ab907d3",
+    "created_at": "2024-07-24T08:02:54.806Z",
+    "program_name": "React Part 2",
+    "program_short_description": "test short desc",
+    "program_description": "<p><span style=\"background-color: rgb(35, 39, 47); color: rgb(246, 247, 249);\">React can change how you think about the designs you look at and the apps you build. When you build a user interface with React, you will first break it apart into pieces called </span><em style=\"background-color: rgb(35, 39, 47); color: rgb(246, 247, 249);\">components</em><span style=\"background-color: rgb(35, 39, 47); color: rgb(246, 247, 249);\">. Then, you will describe the different visual states for each of your components. Finally, you will connect your components together so that the data flows through them. </span></p>",
+    "organization_ids": [],
+    "super_admin": "661114f4ad6de22d9ab907d3",
+    "program_start_date": "2024-07-23T18:30:00.000Z",
+    "program_end_date": "2024-07-27T18:29:59.000Z",
+    "modules_list": [
+      {
+        "module_name": "Break the UI into a component hierarchy ",
+        "module_description": "<p><span style=\"background-color: rgb(35, 39, 47); color: rgb(246, 247, 249);\">Start by drawing boxes around every component and subcomponent in the mockup and naming them. If you work with a designer, they may have already named these components in their design tool. Ask them!</span></p>",
+        "module_start_date": "2024-07-23T18:30:00.000Z",
+        "module_end_date": "2024-07-24T18:29:59.000Z",
+        "order": 0,
+        "activity_list": [
+          {
+            "type": "assessment",
+            "activity_start_date": "2024-07-23T18:30:00.000Z",
+            "activity_end_date": "2024-07-24T18:29:59.000Z",
+            "status": 0,
+            "data": {
+              "no_of_attempt": "1",
+              "test_id": "85214",
+              "test_name": "Break the UI Test"
+            },
+            "order": 0,
+            "_id": "66a0b5705b0d7eb1a3d18d78"
+          }
+        ],
+        "_id": "66a0b54c5b0d7eb1a3d18d72"
+      },
+      {
+        "module_name": " Build a static version in React ",
+        "module_description": "<p><span style=\"color: rgb(246, 247, 249); background-color: rgb(35, 39, 47);\"> The most straightforward approach is to build a version that renders the UI from your data model without adding any interactivity… yet! It’s often easier to build the static version first and add interactivity later. Building a static version requires a lot of typing and no thinking, but adding interactivity requires a lot of thinking and not a lot of typing.</span></p>",
+        "module_start_date": "2024-07-24T18:30:00.000Z",
+        "module_end_date": "2024-07-27T18:29:59.000Z",
+        "order": 0,
+        "activity_list": [
+          {
+            "type": "assessment",
+            "activity_start_date": "2024-07-25T18:30:00.000Z",
+            "activity_end_date": "2024-07-26T18:29:59.000Z",
+            "status": 0,
+            "data": {
+              "no_of_attempt": "1",
+              "test_id": "84265",
+              "test_name": " Build a static version in React Test"
+            },
+            "order": 0,
+            "_id": "66a0b5ed5b0d7eb1a3d18da5"
+          }
+        ],
+        "_id": "66a0b5935b0d7eb1a3d18d81"
+      },
+      {
+        "module_name": "Find the minimal but complete representation of UI state ",
+        "module_description": "<h2>Find the minimal but complete representation of UI state&nbsp;</h2><h2>Find the minimal but complete representation of UI state&nbsp;</h2><h2>Find the minimal but complete representation of UI state&nbsp;</h2><p><br></p>",
+        "module_start_date": "2024-07-23T18:30:00.000Z",
+        "module_end_date": "2024-07-27T18:29:59.000Z",
+        "order": 0,
+        "activity_list": [
+          {
+            "type": "assessment",
+            "activity_start_date": "2024-07-26T18:30:00.000Z",
+            "activity_end_date": "2024-07-27T18:29:59.000Z",
+            "status": 0,
+            "data": {
+              "no_of_attempt": "1",
+              "test_id": "444444",
+              "test_name": "Representation of UI state Test"
+            },
+            "order": 0,
+            "_id": "66a0b61e5b0d7eb1a3d18dc6"
+          }
+        ],
+        "_id": "66a0b6045b0d7eb1a3d18db4"
+      }
+    ],
+    "__v": 0
+  }
+]
