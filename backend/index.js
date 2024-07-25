@@ -1,16 +1,34 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const mongoose = require("mongoose");
 const cron = require('node-cron');
 const AWS = require('aws-sdk');
 const db = require("./conn");
 const Learner = require('./models/Learner');
 const Program = require('./models/Program');
+const cors = require('cors');
 require('dotenv').config()
 
 const app = express();
 const port = 3000;
+
+//Cors 
+
+const allowedOrigins = [
+    'https://humble-space-halibut-v7rxq576prxfpr77-5173.app.github.dev'
+  ];
+
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // if you need to send cookies
+  }));
 
 const SES = {
     accessKeyId: process.env.SES_ACCESS_KEY,
@@ -185,7 +203,36 @@ const sendemail=async()=>{
         console.log("aws ",AWS.config)
     }
 }
-sendemail()
+
+
+app.post('/email',async(req,res)=>{
+    // console.log(req)
+    const {to, email,subject, message } = req.body
+    //sendemail()
+    const htmlContent = `<h1>Hello,</h1>
+                       <p>${message}</p>`;
+    const textContent = `You Have Message !!!`;
+    try {
+        console.log(`Sending welcome email to: ${email}`);
+        const promise = await sendEmail(email, subject, htmlContent, textContent);
+        console.log("Welcome Email sent")
+        console.log(" promise : " , promise)
+        res.json({
+            "to":to,
+            "email":email,
+            "subject":subject,
+            "message":message
+        })
+    }
+    catch (err) {
+        console.log("Error in sending Email : ", err)
+        res.status(500).json({
+            "Message":"Failed to sent Email"
+        })
+    }
+    
+    
+})
 // Schedule the cron jobs for emails
 // cron.schedule('* * * * *', async () => { // Runs every minute for testing, adjust timing as needed
 //     console.log("handeler at corn ")

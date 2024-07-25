@@ -16,12 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Auth0Provider
     domain="dev-r4v8ocmv67ezl0pa.us.auth0.com"
     clientId="l3dgSZqijA453YZ2X03z7EvCThjB6StS"
-    redirectUri={window.location.origin}
+    redirectUri={`${window.location.origin}/dashboard`}
     onRedirectCallback={onRedirectCallback}
-    cacheLocation="localstorage" 
-    authorizationParams={{
-      redirect_uri: window.location.origin
-    }}
+    cacheLocation="localstorage"
   >
     <App />
   </Auth0Provider>,
