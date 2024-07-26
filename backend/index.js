@@ -3,9 +3,11 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const cron = require('node-cron');
 const AWS = require('aws-sdk');
+const telegram = require('node-telegram-bot-api');
 const db = require("./conn");
 const Learner = require('./models/Learner');
 const Program = require('./models/Program');
+const UserData = require('./models/telegram');
 const cors = require('cors');
 require('dotenv').config()
 
@@ -42,6 +44,15 @@ AWS.config.update({
     secretAccessKey: process.env.SECRET_ACCESS_KEY,
     region: process.env.REGION
 });
+//telegram bot 
+const BOT_TOKEN = '6780300132:AAFyQ1AF7YvbFyrp6qc8bWMyh3QG6dlCwfQ';
+const bot = new telegram(BOT_TOKEN, { polling: true });
+
+// Object to store user states
+const userStates = {};
+const data = {};
+
+//SES 
 const ses = new AWS.SES();
 
 app.use(bodyParser.json());
@@ -188,117 +199,112 @@ const parseDate = (dateString) => {
     const date = new Date(dateString);
     return isNaN(date.getTime()) ? null : date;
 };
-// await sendWelcomeEmail(program);
+//telegram bot message
+bot.on('message', async (msg) => {
+    const chatId = msg.chat.id;
+    const userId = msg.from.id;
+    const messageContent =`Hi Welcome to Skill First Labs `;
 
-const sendemail=async()=>{
-    try{
-        const programs = await Program.find();
-        for (const program of programs) {
-            await sendWelcomeEmail(program);
-        }
+    const tMessage = `${messageContent}`;
 
+    try {
+        await bot.sendMessage(chatId, tMessage);
+        
+        console.log("Welcome Email sent");
+        console.log(" promise : ", promise);
+    } catch (err) {
+        console.log("Error in sending Email: ", err);
     }
-    catch(err){
-        console.log(err)
-        console.log("aws ",AWS.config)
-    }
-}
+});
 
-
-app.post('/email',async(req,res)=>{
-    // console.log(req)
-    const {to, email,subject, message } = req.body
-    //sendemail()
-    const htmlContent = `<h1>Hello,</h1>
-                       <p>${message}</p>`;
+// Endpoint for sending email (if needed separately)
+app.post('/email', async (req, res) => {
+    const { to, email, subject, messageContent } = req.body;
+    const htmlContent = `<h1>Hello,</h1><p>${messageContent}</p>`;
     const textContent = `You Have Message !!!`;
+
     try {
         console.log(`Sending welcome email to: ${email}`);
         const promise = await sendEmail(email, subject, htmlContent, textContent);
-        console.log("Welcome Email sent")
-        console.log(" promise : " , promise)
+        
+        console.log("Welcome Email sent");
+        console.log(" promise : ", promise);
         res.json({
-            "to":to,
-            "email":email,
-            "subject":subject,
-            "message":message
-        })
-    }
-    catch (err) {
-        console.log("Error in sending Email : ", err)
+            "to": to,
+            "email": email,
+            "subject": subject,
+            "message": messageContent
+        });
+    } catch (err) {
+        console.log("Error in sending Email: ", err);
         res.status(500).json({
-            "Message":"Failed to sent Email"
-        })
+            "Message": "Failed to send Email"
+        });
     }
-    
-    
-})
+});
+
 // Schedule the cron jobs for emails
-// cron.schedule('* * * * *', async () => { // Runs every minute for testing, adjust timing as needed
-//     console.log("handeler at corn ")
-//     try {
-//         const programs = await Program.find();
-//         const now = new Date();
+cron.schedule('*/10 * * * *', async () => { 
+    console.log("handeler at corn ")
+    try {
+        const programs= await Program.find();
+        const now = new Date();
 
-//         for (const program of programs) {
-//             // const createdAt = new Date(program.created_at?.$date);
-//             // if (createdAt && createdAt <= now && program.status === 0) {
-//             //     await sendWelcomeEmail(program);
-//             //     program.status = 1;
-//             //     await program.save();
-//             // } else {
-//             //     console.error('created_at or $date is undefined', program);
-//             // }
+        for (const program of programs) {
+            const createdAt = new Date(program.created_at?.$date);
+            if (createdAt && createdAt <= now && program.status === 0) {
+                await sendWelcomeEmail(program);
+                program.status = 1;
+                await program.save();
+            } else {
+                console.error('created_at or $date is undefined', program);
+            }
 
-//             for (const module of program.modules_list) {
-//                 // Parse the start date using the Date constructor
-//                 const moduleStartDate = new Date(module.module_start_date);
-//                 console.log('Module Start Date:', moduleStartDate);
+            for (const module of program.modules_list) {
+                const moduleStartDate = new Date(module.module_start_date);
+                console.log('Module Start Date:', moduleStartDate);
             
-//                 if (moduleStartDate && moduleStartDate <= now && module.status === 0) {
-//                     await sendReminderEmail(program);
-//                     module.status = 1;
-//                     await program.save();
-//                 } else {
-//                     console.error('Module start date is invalid or module status is not 0', module);
-//                 }
+                if (moduleStartDate && moduleStartDate <= now && module.status === 0) {
+                    await sendReminderEmail(program);
+                    module.status = 1;
+                    await program.save();
+                } else {
+                    console.error('Module start date is invalid or module status is not 0', module);
+                }
             
-//                 for (const activity of module.activity_list) {
-//                     // Parse the start date using the Date constructor
-//                     const activityStartDate = new Date(activity.activity_start_date);
-//                     console.log('Activity Start Date:', activityStartDate);
+                for (const activity of module.activity_list) {
+                    const activityStartDate = new Date(activity.activity_start_date);
+                    console.log('Activity Start Date:', activityStartDate);
             
-//                     if (activityStartDate && activityStartDate <= now && activity.status === 0) {
-//                         await sendActivityStartEmail(program);
-//                         activity.status = 1;
-//                         await program.save();
-//                     } else {
-//                         console.error('Activity start date is invalid or activity status is not 0', activity);
-//                     }
-//                 }
-//             }
-//         }
+                    if (activityStartDate && activityStartDate <= now && activity.status === 0) {
+                        await sendActivityStartEmail(program);
+                        activity.status = 1;
+                        await program.save();
+                    } else {
+                        console.error('Activity start date is invalid or activity status is not 0', activity);
+                    }
+                }
+            }
+        }
 
-//         const learners = await Learner.find();
+        const learners = await Learner.find();
 
-//         for (const learner of learners) {
-//             for (const assignedProgram of learner.programs_assigned) {
-//                 const program = programs.find(prog => prog._id.toString() === assignedProgram.program_id.toString());
+        for (const learner of learners) {
+            for (const assignedProgram of learner.programs_assigned) {
+                const program = programs.find(prog => prog._id.toString() === assignedProgram.program_id.toString());
 
-//                 if (program && learner.status === 0) {
-//                     await sendThankYouEmail(learner, program);
-//                     learner.status = 1;
-//                     await learner.save();
-//                 }
-//             }
-//         }
-//     } catch (error) {
-//         console.error('Error sending emails:', error);
-//     }
-// });
+                if (program && learner.status === 0) {
+                    await sendThankYouEmail(learner, program);
+                    learner.status = 1;
+                    await learner.save();
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error sending emails:', error);
+    }
+});
 
-// Initial data upload to MongoDB
-//uploadDataToMongoDB();
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
