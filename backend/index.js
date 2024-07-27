@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const cron = require('node-cron');
 const AWS = require('aws-sdk');
+const { expressjwt: jwt } = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
 const telegram = require('node-telegram-bot-api');
 const db = require("./conn");
 const Learner = require('./models/Learner');
@@ -16,7 +18,7 @@ const port = 3000;
 
 //Cors 
 
-const allowedOrigins = [
+const allowedOrigins = [//change if u are using different host
     'https://humble-space-halibut-v7rxq576prxfpr77-5173.app.github.dev'
   ];
 
@@ -304,6 +306,39 @@ cron.schedule('*/10 * * * *', async () => {
         console.error('Error sending emails:', error);
     }
 });
+
+// app.get('/dashboard', jwt.verify({
+//     secret: jwksRsa.expressJwtSecret({
+//       cache: true,
+//       rateLimit: true,
+//       jwksRequestsPerMinute: 5,
+//       jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+//     }),
+//     audience: process.env.AUTH0_AUDIENCE,
+//     issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+//     algorithms: ['RS256']
+//   }), async (req, res) => {
+//   const auth0Id = req.auth.payload.sub;
+
+//   try {
+//     let user = await User.findOne({ auth0Id });
+
+//     if (!user) {
+//       user = new User({
+//         auth0Id,
+//         name: req.auth.payload.name || 'Unknown', // Ensure name is set
+//         email: req.auth.payload.email || 'no-email@domain.com', // Ensure email is set
+//       });
+//       await user.save();
+//     }
+
+//     res.json(user);
+//   } catch (error) {
+//     console.error('Error fetching user:', error);
+//     res.status(500).send('Server Error');
+//   }
+// });
+
 
 
 app.listen(port, () => {
