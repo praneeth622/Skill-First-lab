@@ -14,7 +14,7 @@ const onRedirectCallback = (appState) => {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Auth0Provider
-    domain="dev-r4v8ocmv67ezl0pa.us.auth0.com"
+    domain="dev-r4v8ocmv67ezl0pa.us.auth0.com"// change the key if needed
     clientId="Un48c7na5AChLOiixVgGElwuTwVoAI1P"
     redirectUri={`${window.location.origin}/dashboard`}
     onRedirectCallback={onRedirectCallback}

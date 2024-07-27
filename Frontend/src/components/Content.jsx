@@ -22,8 +22,8 @@ function Content() {
   const handleSubmit = async (e) => {
     console.log(formData)
     e.preventDefault();
-    try {
-      const response = await fetch('https://humble-space-halibut-v7rxq576prxfpr77-3000.app.github.dev/email', {
+    try {//chage the code acoording to backend
+      const response = await fetch('https://musical-fishstick-jj49wg59p575cqr5x-3000.app.github.dev/email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ function Content() {
         console.log('Email sent successfully');
         setFormData({
           username: '',
-          senderName: '',
+          to: '',
           email: '',
           subject: '',
           message: '',
@@ -85,12 +85,12 @@ function Content() {
                 </label>
                 <input
                   type="text"
-                  name="senderName"
-                  id="senderName"
+                  name="to"
+                  id="to"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                   placeholder="Sender Name"
                   required
-                  value={formData.senderName}
+                  value={formData.to}
                   onChange={handleChange}
                 />
               </div>
